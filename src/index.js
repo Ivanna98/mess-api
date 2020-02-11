@@ -4,6 +4,7 @@ const app = express();
 const mongoose = require('mongoose');
 const logger = require('morgan');
 const config = require('./config');
+const auth = require('./routes/auth');
 
 const PORT = process.env.PORT || 3002;
 const DB_URL = config.db.url;
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/ready', (req, res) => {
   res.send('I`m alive');
 });
+app.use('/auth', auth);
 
 mongoose.connect(DB_URL, { useNewUrlParser: true })
   .then(() => {

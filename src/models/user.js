@@ -1,23 +1,11 @@
 const mongoose = require('mongoose');
 
 const UserSchema = mongoose.Schema({
-  firstName: {
-    type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-  },
-  photo: {
+  picture: {
     type: String,
     default: 'https://wisdomexperience.org/wp-content/uploads/2019/10/blank-profile-picture-973460_960_720.png',
   },
-  number: {
-    type: String,
-    required: true,
-  },
-  userName: {
+  name: {
     type: String,
     required: true,
     unique: true,

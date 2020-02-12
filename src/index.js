@@ -4,6 +4,7 @@ const app = express();
 const mongoose = require('mongoose');
 const logger = require('morgan');
 const config = require('./config');
+const connectPassportOAuth = require('./middleware/passport');
 const auth = require('./routes/auth');
 
 const PORT = process.env.PORT || 3002;
@@ -12,6 +13,7 @@ const DB_URL = config.db.url;
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+connectPassportOAuth();
 
 app.get('/ready', (req, res) => {
   res.send('I`m alive');

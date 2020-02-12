@@ -10,6 +10,7 @@ router.get('/google/callback', passport.authenticate('google', { scope: ['profil
   async (req, res) => {
     try {
       const { picture, displayName, id } = req.profile;
+      // const token = req.accessToken;
       const user = await UserCollection.findOne({ googleId: id });
       if (user) {
         const updateUser = await UserCollection.findOneAndUpdate({ googleId: id }, {
@@ -18,7 +19,8 @@ router.get('/google/callback', passport.authenticate('google', { scope: ['profil
           googleId: id,
         });
         return res.json({
-          date: updateUser,
+          user: updateUser,
+          // token,
         });
       }
       const newUser = await new UserCollection({
@@ -27,7 +29,8 @@ router.get('/google/callback', passport.authenticate('google', { scope: ['profil
         googleId: id,
       }).save();
       return res.json({
-        date: newUser,
+        user: newUser,
+        // token,
       });
     } catch (err) {
       return res.status('400').send({ error: err });

@@ -1,6 +1,6 @@
 const passport = require('passport');
 
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const { googleSecret, googleId } = require('../config');
 const UserCollection = require('../models/user');
 
@@ -9,9 +9,25 @@ module.exports = () => passport.use(new GoogleStrategy({
   clientSecret: googleSecret,
   callbackURL: 'http://localhost:3002/auth/google/callback',
 },
-(accessToken, refreshToken, profile, done) => {
-  done(null, profile, accessToken);
-  console.log(accessToken);
+async (accessToken, refreshToken, profile, done) => {
+  const { id, displayName, photos } = profile;
+  const user = await UserCollection.findOne({ googleId: id });
+  if (user) {
+    const updateUser = await UserCollection.findOneAndUpdate({ googleId: id }, {
+      googleId: id,
+      name: displayName,
+      picture: photos.value,
+    }, { new: true });
+    done(null, { updateUser, accessToken });
+  } else {
+    const newUser = new UserCollection({
+      googleId: id,
+      name: displayName,
+      picture: photos.value,
+    });
+    await newUser.save();
+    done(null, { newUser, accessToken });
+  }
 }));
 
 passport.serializeUser((user, done) => {

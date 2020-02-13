@@ -8,15 +8,10 @@ const UserSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
   },
-  email: {
+  googleId: {
     type: String,
-    required: true,
-    minlength: 5,
-    maxlength: 40,
-    trim: true,
-    unique: true,
+    require: true,
   },
 });
 

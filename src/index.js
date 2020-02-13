@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const logger = require('morgan');
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
+const socketJwt = require('socketio-jwt');
 const cors = require('cors');
 const passport = require('passport');
 const config = require('./config');
@@ -27,12 +28,13 @@ app.get('/ready', (req, res) => {
 });
 app.use('/auth', auth);
 
-io.on('connection', (socket) => {
-  console.log('connection');
-  socket.on('disconnect', () => {
-    console.log('disconnected');
+io.sockets
+  .on('connection', socketJwt.authorize({
+    secret: 'SECRET_KEY',
+    timeout: 15000,
+  })).on('authenticated', (socket) => {
+    console.log(`hello! ${socket.decoded_token.name}`);
   });
-});
 
 mongoose.connect(DB_URL, { useNewUrlParser: true })
   .then(() => {

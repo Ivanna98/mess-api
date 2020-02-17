@@ -9,6 +9,7 @@ const findOrCreateUser = async (profile) => {
       name: displayName,
       picture: photos.value,
     }, { new: true });
+    console.log(updateUser);
     return (updateUser);
   }
   const newUser = new UserCollection({

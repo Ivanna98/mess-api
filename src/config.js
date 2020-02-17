@@ -8,5 +8,8 @@ const config = {
   },
   googleSecret: process.env.GOOGLE_SECRET,
   googleId: process.env.GOOGLE_ID,
+  secretKey: process.env.SECRET,
+  jwtExpiration: 259200,
+  testToken: process.env.TOKEN,
 };
 module.exports = config;

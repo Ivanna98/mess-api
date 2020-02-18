@@ -7,7 +7,7 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const cors = require('cors');
 const passport = require('passport');
-const verify = require('./utils/verify');
+const socketioJwt = require('socketio-jwt');
 const config = require('./config');
 const connectPassportOAuth = require('./middleware/passport');
 const auth = require('./routes/auth');
@@ -29,10 +29,20 @@ app.get('/ready', (req, res) => {
 });
 app.use('/auth', auth);
 
+io.use(socketioJwt.authorize({
+  secret: config.secretKey,
+  handshake: true,
+}));
+io.on('connection', async (socket) => {
+  const user = await findUser(socket.decoded_token.id);
+  if (user) {
+    console.log('hello', user.name);
+  } else console.log('user doesn`t exist');
+});
 
 mongoose.connect(DB_URL, { useNewUrlParser: true })
   .then(() => {
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Server started on port ${PORT} `);
     });
   })

@@ -11,8 +11,7 @@ module.exports = () => passport.use(new GoogleStrategy({
   callbackURL: 'http://localhost:3002/auth/google/callback',
 },
 async (accessToken, refreshToken, profile, done) => {
-  console.log(accessToken);
-  done(null, { user: findOrCreateUser(profile), accessToken });
+  done(null, await findOrCreateUser(profile));
 }));
 
 passport.serializeUser((user, done) => {

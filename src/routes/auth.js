@@ -15,8 +15,8 @@ router.get('/google/callback', passport.authenticate('google', {
   scope:
     ['profile'],
   response_type: 'code',
-}), (req, res) => {
-  const token = req.user.accessToken;
+}), async (req, res) => {
+  const token = await generateToken({ id: req.user._id });
   res.redirect(`http://localhost:3000/success?token=${token}`);
 });
 

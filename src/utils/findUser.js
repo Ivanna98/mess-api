@@ -1,10 +1,12 @@
 const UserCollection = require('../models/user');
 
-const findUser = async (googleId) => {
+const findUser = async (id) => {
   try {
-    const userProfile = await UserCollection.findOne({ googleId });
+    const userProfile = await UserCollection.findById(id);
     return (userProfile || null);
   } catch (e) {
     return null;
   }
 };
+
+module.exports = findUser;

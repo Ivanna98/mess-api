@@ -28,6 +28,7 @@ app.get('/ready', (req, res) => {
   res.send('I`m alive');
 });
 app.use('/auth', auth);
+// app.use('/channel', channel);
 
 io.use(socketioJwt.authorize({
   secret: config.secretKey,

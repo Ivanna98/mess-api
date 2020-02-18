@@ -8,7 +8,6 @@ router.get('/google', passport.authenticate('google', {
   scope:
     ['profile'],
   response_type: 'code',
-  // response_type: token id_token,
 }));
 
 router.get('/google/callback', passport.authenticate('google', {

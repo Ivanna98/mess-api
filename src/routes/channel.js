@@ -46,6 +46,16 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), async (req,
   }
 });
 
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await GroupChannelCollection.findByIdAndDelete(id);
+    return res.status(200).send('delete success');
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+});
+
 
 router.get('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
   try {

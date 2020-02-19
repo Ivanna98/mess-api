@@ -38,7 +38,24 @@ io.on('connection', async (socket) => {
   const user = await findUser(socket.decoded_token.id);
   if (user) {
     console.log('hello', user.name);
+    user.onlineStatus = true;
   } else console.log('user doesn`t exist');
+  socket.emit();
+  socket.on('disconnect', () => {
+    console.log(`${user.name} disconnect`);
+    user.onlineStatus = false;
+  });
+  socket.on('typing', () => {
+    user.typeStatus = true;
+    console.log(user.typeStatus);
+    setTimeout(() => {
+      user.typeStatus = false;
+      console.log(user.typeStatus);
+    }, 100);
+  });
+  socket.on('message', (msg) => {
+    console.log(`${user.name}: ${msg}`);
+  });
 });
 
 mongoose.connect(DB_URL, { useNewUrlParser: true })

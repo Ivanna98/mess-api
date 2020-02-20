@@ -9,12 +9,8 @@ router.post('/', passport.authenticate('jwt', { session: false }), async (req, r
   try {
     const {
       title,
-      users,
     } = req.body;
     const groupChannel = new GroupChannelCollection({
-      creator: req.user._id,
-      admins: req.user._id,
-      users,
       title,
     });
     const savedChannel = await groupChannel.save();
@@ -28,14 +24,11 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), async (req,
   try {
     const {
       title,
-      users,
     } = req.body;
 
     const { id } = req.params;
     const updateChannel = await GroupChannelCollection.findByIdAndUpdate(id, {
-      creator: req.user._id,
-      admins: req.user._id,
-      users,
+
       title,
     }, {
       new: true,

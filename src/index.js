@@ -12,6 +12,8 @@ const config = require('./config');
 const connectPassportOAuth = require('./middleware/passport');
 const auth = require('./routes/auth');
 const findUser = require('./utils/findUser');
+const messageEvent = require('./socketEvent/message');
+const channel = require('./routes/channel');
 
 const PORT = process.env.PORT || 3002;
 const DB_URL = config.db.url;
@@ -28,7 +30,6 @@ app.get('/ready', (req, res) => {
   res.send('I`m alive');
 });
 app.use('/auth', auth);
-// app.use('/channel', channel);
 
 io.use(socketioJwt.authorize({
   secret: config.secretKey,
@@ -50,12 +51,9 @@ io.on('connection', async (socket) => {
     console.log(user.typeStatus);
     setTimeout(() => {
       user.typeStatus = false;
-      console.log(user.typeStatus);
     }, 100);
   });
-  socket.on('message', (msg) => {
-    console.log(`${user.name}: ${msg}`);
-  });
+  messageEvent(socket, user);
 });
 
 mongoose.connect(DB_URL, { useNewUrlParser: true })

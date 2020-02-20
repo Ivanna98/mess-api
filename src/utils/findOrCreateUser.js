@@ -10,7 +10,6 @@ const findOrCreateUser = async (profile) => {
       picture,
       email: id,
     }, { new: true });
-    console.log(updateUser);
     return (updateUser);
   }
   const newUser = new UserCollection({

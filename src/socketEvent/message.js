@@ -8,7 +8,7 @@ const messageEvent = (socket, user) => {
       groupChannel: channel,
     });
     const savedMsg = await newMsg.save();
-    socket.emit('added message');
+    socket.emit('addedMess', channel);
   });
 };
 

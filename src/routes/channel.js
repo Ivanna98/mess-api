@@ -5,7 +5,7 @@ const passport = require('passport');
 const router = express.Router();
 const GroupChannelCollection = require('../models/groupChannel');
 
-router.post('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const {
       title,
@@ -20,7 +20,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), async (req, r
   }
 });
 
-router.put('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const {
       title,
@@ -50,15 +50,16 @@ router.delete('/:id', async (req, res) => {
 });
 
 
-router.get('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const { user } = req.body;
-    const channels = await GroupChannelCollection.find({ users: user });
+    const channels = await GroupChannelCollection.find();
     if (channels) {
-      return res.json(channels);
+      return res.json({ channels });
     }
     return res.json(null);
   } catch (error) {
-    return res.status(200);
+    return res.status(400).json({ error: error.message });
   }
 });
+
+module.exports = router;

@@ -13,7 +13,9 @@ const connectPassportOAuth = require('./middleware/passport');
 const auth = require('./routes/auth');
 const findUser = require('./utils/findUser');
 const messageEvent = require('./socketEvent/message');
+const channelEvent = require('./socketEvent/channel');
 const channel = require('./routes/channel');
+
 
 const PORT = process.env.PORT || 3002;
 const DB_URL = config.db.url;
@@ -30,6 +32,7 @@ app.get('/ready', (req, res) => {
   res.send('I`m alive');
 });
 app.use('/auth', auth);
+app.use('/channels', channel);
 
 io.use(socketioJwt.authorize({
   secret: config.secretKey,
@@ -41,19 +44,18 @@ io.on('connection', async (socket) => {
     console.log('hello', user.name);
     user.onlineStatus = true;
   } else console.log('user doesn`t exist');
-  socket.emit();
   socket.on('disconnect', () => {
     console.log(`${user.name} disconnect`);
     user.onlineStatus = false;
   });
   socket.on('typing', () => {
     user.typeStatus = true;
-    console.log(user.typeStatus);
     setTimeout(() => {
       user.typeStatus = false;
     }, 100);
   });
   messageEvent(socket, user);
+  channelEvent(socket);
 });
 
 mongoose.connect(DB_URL, { useNewUrlParser: true })

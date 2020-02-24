@@ -55,7 +55,7 @@ io.on('connection', async (socket) => {
     }, 100);
   });
   messageEvent(socket, user);
-  channelEvent(socket);
+  channelEvent(socket, io);
 });
 
 mongoose.connect(DB_URL, { useNewUrlParser: true })

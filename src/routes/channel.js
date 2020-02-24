@@ -5,21 +5,6 @@ const passport = require('passport');
 const router = express.Router();
 const GroupChannelCollection = require('../models/groupChannel');
 
-router.post('/', async (req, res) => {
-  try {
-    const {
-      title,
-    } = req.body;
-    const groupChannel = new GroupChannelCollection({
-      title,
-    });
-    const savedChannel = await groupChannel.save();
-    return res.json(savedChannel);
-  } catch (error) {
-    return res.status(400).json({ error: error.message });
-  }
-});
-
 router.put('/:id', async (req, res) => {
   try {
     const {

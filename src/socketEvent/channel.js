@@ -1,7 +1,12 @@
+const GroupChannelCollection = require('../models/groupChannel');
 
-const channelEvent = (socket) => {
-  socket.on('newChannel', () => {
-    socket.emit('addedChannel');
+const channelEvent = (socket, io) => {
+  socket.on('newChannel', async ({ title }) => {
+    const groupChannel = new GroupChannelCollection({
+      title,
+    });
+    const savedChannel = await groupChannel.save();
+    io.emit('addedChannel', savedChannel);
   });
 };
 

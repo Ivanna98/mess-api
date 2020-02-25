@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const messageSchema = mongoose.Schema({
-  // groupChannel: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'GroupChannel',
-  // },
+  groupChannel: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'GroupChannel',
+  },
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

@@ -15,6 +15,7 @@ const findUser = require('./utils/findUser');
 const messageEvent = require('./socketEvent/message');
 const channelEvent = require('./socketEvent/channel');
 const channel = require('./routes/channel');
+const message = require('./routes/message');
 
 
 const PORT = process.env.PORT || 3002;
@@ -33,6 +34,7 @@ app.get('/ready', (req, res) => {
 });
 app.use('/auth', auth);
 app.use('/channels', channel);
+app.use('/message', message);
 
 io.use(socketioJwt.authorize({
   secret: config.secretKey,
@@ -54,7 +56,7 @@ io.on('connection', async (socket) => {
       user.typeStatus = false;
     }, 100);
   });
-  messageEvent(socket, user);
+  messageEvent(socket, user, io);
   channelEvent(socket, io);
 });
 

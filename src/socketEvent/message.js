@@ -1,14 +1,14 @@
 const MessageCollection = require('../models/message');
 
-const messageEvent = (socket, user) => {
-  socket.on('message', async (msg, channel) => {
+const messageEvent = (socket, user, io) => {
+  socket.on('message', async ({ messValue, channelId }) => {
     const newMsg = new MessageCollection({
       author: user,
-      text: msg,
-      groupChannel: channel,
+      text: messValue,
+      groupChannel: channelId,
     });
-    const savedMsg = await newMsg.save();
-    socket.emit('addedMess', channel);
+    const addedMess = await newMsg.save();
+    io.emit('addedMess', { channelId, addedMess });
   });
 };
 

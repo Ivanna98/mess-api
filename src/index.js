@@ -16,6 +16,7 @@ const messageEvent = require('./socketEvent/message');
 const channelEvent = require('./socketEvent/channel');
 const channel = require('./routes/channel');
 const message = require('./routes/message');
+const updateOnlineStatus = require('./utils/updateOnlineStatus');
 
 
 const PORT = process.env.PORT || 3002;
@@ -44,11 +45,11 @@ io.on('connection', async (socket) => {
   const user = await findUser(socket.decoded_token.id);
   if (user) {
     console.log('hello', user.name);
-    user.onlineStatus = true;
+    updateOnlineStatus(user, true);
   } else console.log('user doesn`t exist');
   socket.on('disconnect', () => {
     console.log(`${user.name} disconnect`);
-    user.onlineStatus = false;
+    updateOnlineStatus(user, false);
   });
   socket.on('typing', () => {
     user.typeStatus = true;

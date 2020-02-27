@@ -33,15 +33,17 @@ connectPassportOAuth();
 app.get('/ready', (req, res) => {
   res.send('I`m alive');
 });
+
+
 app.use('/auth', auth);
-app.use('/channels', channel);
-app.use('/message', message);
 
 io.use(socketioJwt.authorize({
   secret: config.secretKey,
   handshake: true,
 }));
 io.on('connection', async (socket) => {
+  app.use('/channels', channel);
+  app.use('/message', message);
   const user = await findUser(socket.decoded_token.id);
   if (user) {
     console.log('hello', user.name);

@@ -9,7 +9,7 @@ const config = {
   googleSecret: process.env.GOOGLE_SECRET,
   googleId: process.env.GOOGLE_ID,
   secretKey: process.env.SECRET,
-  jwtExpiration: 60,
+  jwtExpiration: 5184000,
   testToken: process.env.TOKEN,
 };
 module.exports = config;

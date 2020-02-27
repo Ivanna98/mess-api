@@ -16,12 +16,14 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const user = UserCollection.findById(id);
+    const user = await UserCollection.findById(id);
     if (user) {
-      return res.json(user);
+      return res.json({ user });
     }
     throw Error('User doesn`t exist');
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
 });
+
+module.exports = router;

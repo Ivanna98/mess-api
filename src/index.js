@@ -14,8 +14,9 @@ const auth = require('./routes/auth');
 const findUser = require('./utils/findUser');
 const messageEvent = require('./socketEvent/message');
 const channelEvent = require('./socketEvent/channel');
-const channel = require('./routes/channel');
-const message = require('./routes/message');
+const channelRoute = require('./routes/channel');
+const messageRoute = require('./routes/message');
+const userRoute = require('./routes/user');
 const updateOnlineStatus = require('./utils/updateOnlineStatus');
 
 
@@ -42,8 +43,9 @@ io.use(socketioJwt.authorize({
   handshake: true,
 }));
 io.on('connection', async (socket) => {
-  app.use('/channels', channel);
-  app.use('/message', message);
+  app.use('/user', userRoute);
+  app.use('/channels', channelRoute);
+  app.use('/message', messageRoute);
   const user = await findUser(socket.decoded_token.id);
   if (user) {
     console.log('hello', user.name);

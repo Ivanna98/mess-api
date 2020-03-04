@@ -8,7 +8,8 @@ const messageEvent = (socket, user, io) => {
       groupChannel: channelId,
     });
     const addedMess = await newMsg.save();
-    io.emit('addedMess', { channelId, addedMess });
+    io.emit('addedMess', { addedMess });
+    socket.broadcast.emit('addedMessChannel', { addedMess, channelId });
   });
 };
 

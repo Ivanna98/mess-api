@@ -18,9 +18,9 @@ const connectPassport = (passport) => {
           name: user.name,
         });
       }
-      return done(null, false);
-    } catch (e) {
-      return done(null, false);
+      throw new Error('User doesn`t exist');
+    } catch (err) {
+      return done(err, false);
     }
   }));
 };

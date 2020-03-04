@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const generateToken = require('../utils/generateToken');
+const config = require('../config');
 
 router.get('/google', passport.authenticate('google', {
   scope:
@@ -16,7 +17,7 @@ router.get('/google/callback', passport.authenticate('google', {
   response_type: 'code',
 }), async (req, res) => {
   const token = await generateToken({ id: req.user._id });
-  res.redirect(`http://localhost:3000/success?token=${token}`);
+  res.redirect(`${config.feUrl}/success?token=${token}`);
 });
 
 

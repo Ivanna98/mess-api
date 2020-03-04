@@ -38,10 +38,7 @@ router.delete('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const channels = await GroupChannelCollection.find();
-    if (channels) {
-      return res.json({ channels });
-    }
-    return res.json(null);
+    return res.json({ channels });
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
@@ -51,7 +48,10 @@ router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const channel = await GroupChannelCollection.findById(id);
-    return res.json({ channel });
+    if (channel) {
+      return res.json({ channel });
+    }
+    return res.sendStatus(404);
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }

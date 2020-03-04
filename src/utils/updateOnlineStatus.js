@@ -1,6 +1,5 @@
 
 const updateOnlineStatus = async (user, newStatus) => {
-  console.log('update');
   const {
     googleId, name, picture, email, typeStatus, onlineStatus,
   } = user;

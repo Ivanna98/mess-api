@@ -49,11 +49,13 @@ io.on('connection', async (socket) => {
   const user = await findUser(socket.decoded_token.id);
   if (user) {
     console.log('hello', user.name);
+    io.emit('updateOnlineStatus', { user, onlineStatus: true });
     updateOnlineStatus(user, true);
   } else console.log('user doesn`t exist');
   socket.on('disconnect', () => {
     console.log(`${user.name} disconnect`);
     updateOnlineStatus(user, false);
+    io.emit('updateOnlineStatus', { user, onlineStatus: false });
   });
   socket.on('typing', () => {
     user.typeStatus = true;
@@ -65,6 +67,10 @@ io.on('connection', async (socket) => {
   channelEvent(socket, io);
 });
 
+mongoose.connection.on('error', (err) => {
+  console.log(err);
+});
+
 mongoose.connect(DB_URL, { useNewUrlParser: true })
   .then(() => {
     server.listen(PORT, () => {
@@ -73,8 +79,5 @@ mongoose.connect(DB_URL, { useNewUrlParser: true })
   })
   .catch((error) => console.log(error.message));
 
-mongoose.connection.on('error', (err) => {
-  console.log(err);
-});
 
 module.exports = app;

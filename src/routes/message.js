@@ -10,13 +10,7 @@ router.get('/', async (req, res) => {
     const { channel } = req.query;
     const messages = await MessageCollection
       .find({ groupChannel: channel })
-      .populate({
-        path: 'author',
-        model: UserCollection,
-        select: {
-          _id: 1, name: 1, picture: 1, onlineStatus: 1,
-        },
-      });
+      .populate('author', '_id name picture onlineStatus');
     return res.json({ messages });
   } catch (error) {
     return res.status(400).json({ error: error.message });

@@ -1,11 +1,10 @@
 const express = require('express');
 
 const router = express.Router();
-
+const passport = require('passport');
 const MessageCollection = require('../models/message');
-const UserCollection = require('../models/user');
 
-router.get('/', async (req, res) => {
+router.get('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
   try {
     const { channel } = req.query;
     const messages = await MessageCollection

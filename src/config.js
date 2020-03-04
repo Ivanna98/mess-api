@@ -7,6 +7,7 @@ const config = {
     url: process.env.DB_URL,
   },
   feUrl: process.env.FE_URL,
+  cbUrl: process.env.CB_URL,
   googleSecret: process.env.GOOGLE_SECRET,
   googleId: process.env.GOOGLE_ID,
   secretKey: process.env.SECRET,

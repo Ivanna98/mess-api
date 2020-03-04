@@ -1,11 +1,10 @@
 const express = require('express');
 
-const passport = require('passport');
-
 const router = express.Router();
+const passport = require('passport');
 const GroupChannelCollection = require('../models/groupChannel');
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
   try {
     const {
       title,
@@ -24,7 +23,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
   try {
     const { id } = req.params;
     await GroupChannelCollection.findByIdAndDelete(id);
@@ -35,7 +34,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 
-router.get('/', async (req, res) => {
+router.get('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
   try {
     const channels = await GroupChannelCollection.find();
     return res.json({ channels });
@@ -44,7 +43,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
   try {
     const { id } = req.params;
     const channel = await GroupChannelCollection.findById(id);

@@ -10,6 +10,7 @@ const passport = require('passport');
 const socketioJwt = require('socketio-jwt');
 const config = require('./config');
 const connectPassportOAuth = require('./middleware/passport');
+const connectPassport = require('./middleware/passportJwt');
 const auth = require('./routes/auth');
 const findUser = require('./utils/findUser');
 const messageEvent = require('./socketEvent/message');
@@ -30,11 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(passport.initialize());
 connectPassportOAuth();
-
-app.get('/ready', (req, res) => {
-  res.send('I`m alive');
-});
-
+connectPassport(passport);
 
 app.use('/auth', auth);
 

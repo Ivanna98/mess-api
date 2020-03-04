@@ -1,11 +1,13 @@
 const express = require('express');
 
+const passport = require('passport');
+
 const router = express.Router();
 const UserCollection = require('../models/user');
 
-router.get('/', async (req, res) => {
+router.get('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
   try {
-    const users = UserCollection.find();
+    const users = await UserCollection.find();
 
     return res.json(users);
   } catch (error) {
@@ -13,14 +15,14 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
   try {
     const { id } = req.params;
     const user = await UserCollection.findById(id);
     if (user) {
       return res.json({ user });
     }
-    throw Error('User doesn`t exist');
+    return res.sendStatus(404);
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }

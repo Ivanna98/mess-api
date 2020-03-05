@@ -15,6 +15,7 @@ const auth = require('./routes/auth');
 const { findUser } = require('./utils/userServices');
 const messageEvent = require('./socketEvent/message');
 const channelEvent = require('./socketEvent/channel');
+const typingEvent = require('./socketEvent/typing');
 const channelRoute = require('./routes/channel');
 const messageRoute = require('./routes/message');
 const userRoute = require('./routes/user');
@@ -52,6 +53,7 @@ io.on('connection', async (socket) => {
     updateOnlineStatus(user, false);
     io.emit('updateOnlineStatus', { user, onlineStatus: false });
   });
+  typingEvent(socket, user);
   messageEvent(socket, user._id, io);
   channelEvent(socket, io);
 });

@@ -1,14 +1,6 @@
 
 const updateOnlineStatus = async (user, newStatus) => {
-  const {
-    googleId, name, picture, email, typeStatus, onlineStatus,
-  } = user;
-  const updateUser = await user.updateOne({
-    googleId,
-    name,
-    picture,
-    email,
-    typeStatus,
+  await user.updateOne({
     onlineStatus: newStatus,
   }, { new: true });
 };

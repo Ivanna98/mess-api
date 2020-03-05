@@ -12,7 +12,7 @@ const config = require('./config');
 const connectPassportOAuth = require('./middleware/passport');
 const connectPassport = require('./middleware/passportJwt');
 const auth = require('./routes/auth');
-const findUser = require('./utils/findUser');
+const { findUser } = require('./utils/userServices');
 const messageEvent = require('./socketEvent/message');
 const channelEvent = require('./socketEvent/channel');
 const channelRoute = require('./routes/channel');
@@ -34,33 +34,25 @@ connectPassportOAuth();
 connectPassport(passport);
 
 app.use('/auth', auth);
+app.use('/user', userRoute);
+app.use('/channels', channelRoute);
+app.use('/message', messageRoute);
 
 io.use(socketioJwt.authorize({
   secret: config.secretKey,
   handshake: true,
 }));
 io.on('connection', async (socket) => {
-  app.use('/user', userRoute);
-  app.use('/channels', channelRoute);
-  app.use('/message', messageRoute);
   const user = await findUser(socket.decoded_token.id);
   if (user) {
-    console.log('hello', user.name);
     io.emit('updateOnlineStatus', { user, onlineStatus: true });
     updateOnlineStatus(user, true);
-  } else console.log('user doesn`t exist');
+  }
   socket.on('disconnect', () => {
-    console.log(`${user.name} disconnect`);
     updateOnlineStatus(user, false);
     io.emit('updateOnlineStatus', { user, onlineStatus: false });
   });
-  socket.on('typing', () => {
-    user.typeStatus = true;
-    setTimeout(() => {
-      user.typeStatus = false;
-    }, 100);
-  });
-  messageEvent(socket, user, io);
+  messageEvent(socket, user._id, io);
   channelEvent(socket, io);
 });
 

@@ -2,7 +2,7 @@ const passport = require('passport');
 
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const { googleSecret, googleId } = require('../config');
-const findOrCreateUser = require('../utils/findOrCreateUser');
+const { updateOrCreateUser } = require('../utils/userServices');
 const config = require('../config');
 
 
@@ -12,7 +12,7 @@ module.exports = () => passport.use(new GoogleStrategy({
   callbackURL: `${config.cbUrl}/auth/google/callback`,
 },
 async (accessToken, refreshToken, profile, done) => {
-  done(null, await findOrCreateUser(profile));
+  done(null, await updateOrCreateUser(profile));
 }));
 
 passport.serializeUser((user, done) => {

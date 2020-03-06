@@ -9,7 +9,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
   try {
     const users = await UserCollection.find();
 
-    return res.status(200).json(users);
+    return res.status(200).json({ users });
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }

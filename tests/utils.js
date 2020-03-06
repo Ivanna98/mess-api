@@ -4,8 +4,9 @@ const MessageCollection = require('../src/models/message');
 const mock = require('./mock');
 
 const utils = {
-  createMockUser: async () => {
-   await  UserCollection.create(mock.user1);
+  createMockUser: async (user) => {
+   await  UserCollection.create(user);
+   return user;
   },
   addChannel: async () => {
     const channel = await GroupChannelCollection.create(mock.channel);

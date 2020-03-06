@@ -19,7 +19,7 @@ describe('Message api', () => {
     await UserCollection.deleteMany({});
     await GroupChannelCollection.deleteMany({});
     await MessageCollection.deleteMany({});
-    await createMockUser()
+    await createMockUser(user1);
     token = await generateToken({ id: user1._id });
   })
 

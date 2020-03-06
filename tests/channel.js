@@ -5,7 +5,7 @@ const UserCollection = require('../src/models/user');
 const GroupChannelCollection = require('../src/models/groupChannel');
 const MessageCollection = require('../src/models/message');
 const generateToken = require('../src/utils/generateToken');
-const { user1, updateChannel } = require('./mock');
+const { user1, updateChannel, wrongId } = require('./mock');
 
 const { createMockUser, addChannel, addMessage, getMess} = require('./utils');
 
@@ -19,7 +19,7 @@ describe('Channels api', () => {
     await UserCollection.deleteMany({});
     await GroupChannelCollection.deleteMany({});
     await MessageCollection.deleteMany({});
-    await createMockUser()
+    await createMockUser(user1);
     token = await generateToken({ id: user1._id });
   })
 
@@ -54,6 +54,15 @@ describe('Channels api', () => {
         .send();
       assert.equal(getRes.status, 200);
       assert.equal(getRes.body.channel.title, channel.title);
+    });
+    it('Should return status 404', async () => {
+      const channel = await addChannel();
+      const getRes = await chai
+        .request(server)
+        .get(`/channels/${wrongId}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send();
+      assert.equal(getRes.status, 404);
     });
   });
   describe('PUT /channels/:id', () => {

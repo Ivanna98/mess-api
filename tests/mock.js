@@ -22,6 +22,7 @@ const mock = {
   },
   message: {
     text: 'textMessage textMessage',
-  }
+  },
+  wrongId: '5e62332af448327fb82700df',
 }
 module.exports = mock;

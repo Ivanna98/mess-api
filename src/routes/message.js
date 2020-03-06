@@ -10,7 +10,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
     const messages = await MessageCollection
       .find({ groupChannel: channel })
       .populate('author', '_id name picture onlineStatus');
-    return res.json({ messages });
+    return res.status(200).json({ messages });
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }

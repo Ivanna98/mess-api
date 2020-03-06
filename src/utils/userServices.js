@@ -17,8 +17,6 @@ const updateOrCreateUser = async (profile) => {
   });
   return (newUser);
 };
-
-
 const findUser = async (id) => {
   const user = await UserCollection.findById(id);
   return (user);

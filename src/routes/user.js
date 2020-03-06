@@ -9,7 +9,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
   try {
     const users = await UserCollection.find();
 
-    return res.json(users);
+    return res.status(200).json(users);
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
@@ -20,7 +20,7 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), async (req,
     const { id } = req.params;
     const user = await UserCollection.findById(id);
     if (user) {
-      return res.json({ user });
+      return res.status(200).json({ user });
     }
     return res.sendStatus(404);
   } catch (error) {

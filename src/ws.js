@@ -1,7 +1,7 @@
 const socketioJwt = require('socketio-jwt');
 
 const socketIO = require('socket.io');
-const { findUser } = require('./utils/userServices');
+const { findUser } = require('./services/userServices');
 const messageEvent = require('./socketEvent/message');
 const channelEvent = require('./socketEvent/channel');
 const typingEvent = require('./socketEvent/typing');

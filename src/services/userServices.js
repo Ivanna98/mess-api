@@ -7,7 +7,7 @@ const updateOrCreateUser = async (profile) => {
     user.name = displayName;
     user.picture = picture;
     const updateUser = await user.save();
-    return (updateUser);
+    return updateUser;
   }
   const newUser = await UserCollection.create({
     googleId: id,
@@ -15,12 +15,14 @@ const updateOrCreateUser = async (profile) => {
     picture,
     email: id,
   });
-  return (newUser);
+  return newUser;
 };
-const findUser = async (id) => {
-  const user = await UserCollection.findById(id);
-  return (user);
-};
+const findUser = async (id) => UserCollection.findById();
 
-module.exports.updateOrCreateUser = updateOrCreateUser;
-module.exports.findUser = findUser;
+const findAllUser = async () => UserCollection.find();
+
+module.exports = {
+  updateOrCreateUser,
+  findUser,
+  findAllUser,
+};

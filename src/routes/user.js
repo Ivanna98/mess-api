@@ -1,11 +1,10 @@
 const express = require('express');
 
-const passport = require('passport');
-
 const router = express.Router();
+const protect = require('../middleware/protect');
 const { findUser, findAllUser } = require('../services/userServices');
 
-router.get('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.get('/', protect, async (req, res) => {
   try {
     const users = await findAllUser();
 
@@ -15,7 +14,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
   }
 });
 
-router.get('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.get('/:id', protect, async (req, res) => {
   try {
     const { id } = req.params;
     const user = await findUser(id);

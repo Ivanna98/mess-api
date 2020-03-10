@@ -1,13 +1,14 @@
 const express = require('express');
 
+const protect = require('../middleware/protect');
+
 const router = express.Router();
-const passport = require('passport');
 
 const {
   idUpdateChannel, idDeleteChannel, getAllChannels, idGetChannel,
 } = require('../services/channelServices');
 
-router.put('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.put('/:id', protect, async (req, res) => {
   try {
     const {
       title,
@@ -24,7 +25,7 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), async (req,
   }
 });
 
-router.delete('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.delete('/:id', protect, async (req, res) => {
   try {
     const { id } = req.params;
     await idDeleteChannel(id);
@@ -35,7 +36,7 @@ router.delete('/:id', passport.authenticate('jwt', { session: false }), async (r
 });
 
 
-router.get('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.get('/', protect, async (req, res) => {
   try {
     const channels = await getAllChannels();
     res.status(200).json({ channels });
@@ -44,7 +45,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (req, re
   }
 });
 
-router.get('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.get('/:id', protect, async (req, res) => {
   try {
     const { id } = req.params;
     const channel = await idGetChannel(id);

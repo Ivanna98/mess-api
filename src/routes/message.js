@@ -1,10 +1,10 @@
 const express = require('express');
 
 const router = express.Router();
-const passport = require('passport');
+const protect = require('../middleware/protect');
 const { getAllChannelMessage } = require('../services/messageServices');
 
-router.get('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.get('/', protect, async (req, res) => {
   try {
     const { channel } = req.query;
     if (!channel) {

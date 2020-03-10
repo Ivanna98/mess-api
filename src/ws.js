@@ -1,7 +1,7 @@
 const socketioJwt = require('socketio-jwt');
 
 const socketIO = require('socket.io');
-const { findUser } = require('./utils/userServices');
+const { findUser } = require('./services/userServices');
 const messageEvent = require('./socketEvent/message');
 const channelEvent = require('./socketEvent/channel');
 const typingEvent = require('./socketEvent/typing');
@@ -19,14 +19,14 @@ const ws = (server) => {
     if (user) {
       io.emit('updateOnlineStatus', { user, onlineStatus: true });
       updateOnlineStatus(user, true);
+      socket.on('disconnect', () => {
+        updateOnlineStatus(user, false);
+        io.emit('updateOnlineStatus', { user, onlineStatus: false });
+      });
+      typingEvent(socket, user);
+      messageEvent(socket, user._id, io);
+      channelEvent(socket, io);
     }
-    socket.on('disconnect', () => {
-      updateOnlineStatus(user, false);
-      io.emit('updateOnlineStatus', { user, onlineStatus: false });
-    });
-    typingEvent(socket, user);
-    messageEvent(socket, user._id, io);
-    channelEvent(socket, io);
   });
 };
 

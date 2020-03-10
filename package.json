@@ -7,7 +7,7 @@
     "start": "node src/index.js",
     "dev": "cross-env NODE_ENV=development nodemon --exec \"npm run lint && npm run start\"",
     "lint": "eslint --fix --config .eslintrc src/**/*.js",
-    "test": "cross-env NODE_ENV=test nyc --reporter=text mocha tests/*.js --exit --timeout 5000"
+    "test": "cross-env NODE_ENV=test nyc --reporter=text mocha tests/*.js --exit --timeout 10000"
   },
   "repository": {
     "type": "git",
@@ -27,7 +27,8 @@
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.20.1",
     "mocha": "^7.1.0",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "socket.io-client": "^2.3.0"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.0",

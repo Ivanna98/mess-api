@@ -2,7 +2,7 @@ const passport = require('passport');
 
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const { googleSecret, googleId } = require('../config');
-const { updateOrCreateUser } = require('../utils/userServices');
+const { updateOrCreateUser } = require('../services/userServices');
 const config = require('../config');
 
 

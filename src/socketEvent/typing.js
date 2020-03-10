@@ -1,7 +1,7 @@
 
 const typingEvent = (socket, user) => {
-  socket.on('typing', () => {
-    socket.broadcast.emit('userTyping', user.name);
+  socket.on('typing', (channelId) => {
+    socket.broadcast.emit(`userTyping${channelId}`, user.name);
   });
 };
 

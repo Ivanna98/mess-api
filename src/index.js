@@ -1,6 +1,7 @@
 const configApp = require('./app');
+const config = require('./config');
 
-const PORT = process.env.PORT || 3002;
+const PORT = config.port;
 
 const init = async () => {
   try {

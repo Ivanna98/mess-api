@@ -1,11 +1,10 @@
 const socketioJwt = require('socketio-jwt');
 
 const socketIO = require('socket.io');
-const { findUser } = require('./services/userServices');
+const { findUser, updateOnlineStatus } = require('./services/userServices');
 const messageEvent = require('./socketEvent/message');
 const channelEvent = require('./socketEvent/channel');
 const typingEvent = require('./socketEvent/typing');
-const updateOnlineStatus = require('./utils/updateOnlineStatus');
 const config = require('./config');
 
 const ws = (server) => {
@@ -18,9 +17,9 @@ const ws = (server) => {
     const user = await findUser(socket.decoded_token.id);
     if (user) {
       io.emit('updateOnlineStatus', { user, onlineStatus: true });
-      updateOnlineStatus(user, true);
+      updateOnlineStatus(user._id, true);
       socket.on('disconnect', () => {
-        updateOnlineStatus(user, false);
+        updateOnlineStatus(user._id, false);
         io.emit('updateOnlineStatus', { user, onlineStatus: false });
       });
       typingEvent(socket, user);

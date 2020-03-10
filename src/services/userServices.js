@@ -21,8 +21,12 @@ const findUser = async (id) => UserCollection.findById(id);
 
 const findAllUser = async () => UserCollection.find();
 
+const updateOnlineStatus = async (id, newStatus) => UserCollection
+  .findByIdAndUpdate(id, { onlineStatus: newStatus }, { new: true });
+
 module.exports = {
   updateOrCreateUser,
   findUser,
   findAllUser,
+  updateOnlineStatus,
 };

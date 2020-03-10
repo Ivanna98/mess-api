@@ -1,23 +1,22 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const server = require('../src/index');
+const configApp = require('../src/app');
 const UserCollection = require('../src/models/user');
 const GroupChannelCollection = require('../src/models/groupChannel');
 const MessageCollection = require('../src/models/message');
 const generateToken = require('../src/utils/generateToken');
-const { user1, user2, wrongId, notId} = require('./mock');
+const { user1, user2, wrongId, notId } = require('./mock');
 
-const { createMockUser} = require('./utils');
+const { createMockUser } = require('./utils');
 
 const { assert } = chai;
 chai.use(chaiHttp);
-
 describe('User api', () => {
   let token;
-  // let server;
-  // before(async () => {
-  //   server = createServer();
-  // })
+  let server;
+  before(async () => {
+    server = await configApp();
+  })
   beforeEach(async () => {
     await UserCollection.deleteMany({});
     await GroupChannelCollection.deleteMany({});

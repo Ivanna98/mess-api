@@ -1,23 +1,22 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const server = require('../src/index');
+const configApp = require('../src/app');
 const UserCollection = require('../src/models/user');
 const GroupChannelCollection = require('../src/models/groupChannel');
 const MessageCollection = require('../src/models/message');
 const generateToken = require('../src/utils/generateToken');
-const { user1} = require('./mock');
+const { user1 } = require('./mock');
 
-const { createMockUser, addChannel, addMessage} = require('./utils');
+const { createMockUser, addChannel, addMessage } = require('./utils');
 
 const { assert } = chai;
 chai.use(chaiHttp);
-
 describe('Message api', () => {
   let token;
-  // let server;
-  // before(async () => {
-  //   server = await createServer();
-  // })
+  let server;
+  before(async () => {
+    server = await configApp();
+  })
   beforeEach(async () => {
     await UserCollection.deleteMany({});
     await GroupChannelCollection.deleteMany({});
@@ -48,7 +47,7 @@ describe('Message api', () => {
         .send();
       assert.equal(getRes.body.messages.length, 2);
     });
-    
+
     it('Should return status 400', async () => {
       const channel = await addChannel();
       await addMessage(channel._id);

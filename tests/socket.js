@@ -93,7 +93,7 @@ describe('Web socket tests', () => {
       const wsClient2 = await initClientWs(token);
       const { _id } = await addChannel();
       await new Promise((resolve) => {
-        wsClient1.emit('typing',  _id );
+        wsClient1.emit('typing', _id);
         wsClient2.on(`userTyping${_id}`, () => {
           resolve();
         });
@@ -106,7 +106,7 @@ describe('Web socket tests', () => {
       const wsClient1 = await initClientWs(token);
       const wsClient2 = await initClientWs(token);
       await new Promise((resolve) => {
-        wsClient1.emit('newChannel',  {title: channel.title} );
+        wsClient1.emit('newChannel', { title: channel.title });
         wsClient2.on(`addedChannel`, (savedChannel) => {
           assert.equal(channel.title, savedChannel.title);
           resolve();

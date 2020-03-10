@@ -11,7 +11,7 @@ const mock = require('./mock');
 
 const utils = {
   createMockUser: async (user) => UserCollection
-  .create(user),
+    .create(user),
   addChannel: async () => GroupChannelCollection
     .create(mock.channel),
 
@@ -48,15 +48,6 @@ const utils = {
 
     return server;
   }
-  // createServer: async () => {
-  //   try{
-  //     configApp(app);
-  //   await mongoose.connect(config.db.url, {useNewUrlParser: true})
-  //   return app.listen(3002, () => console.log("here we go3"));
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // }
 }
 
 module.exports = utils;

@@ -24,5 +24,6 @@ const mock = {
     text: 'textMessage textMessage',
   },
   wrongId: '5e62332af448327fb82700df',
+  notId: 'someText',
 }
 module.exports = mock;

@@ -5,7 +5,7 @@ const UserCollection = require('../src/models/user');
 const GroupChannelCollection = require('../src/models/groupChannel');
 const MessageCollection = require('../src/models/message');
 const generateToken = require('../src/utils/generateToken');
-const { user1, user2, wrongId} = require('./mock');
+const { user1, user2, wrongId, notId} = require('./mock');
 
 const { createMockUser} = require('./utils');
 
@@ -67,6 +67,17 @@ describe('User api', () => {
         .set('Authorization', `Bearer ${token}`)
         .send();
       assert.equal(getRes.status, 404);
+    });
+
+    it('Should return status 400', async () => {
+      const user = await createMockUser(user1);
+      await createMockUser(user2);
+      const getRes = await chai
+        .request(server)
+        .get(`/user/${notId}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send();
+      assert.equal(getRes.status, 400);
     });
   });
 });

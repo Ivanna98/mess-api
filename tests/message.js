@@ -48,5 +48,17 @@ describe('Message api', () => {
         .send();
       assert.equal(getRes.body.messages.length, 2);
     });
+    
+    it('Should return status 400', async () => {
+      const channel = await addChannel();
+      await addMessage(channel._id);
+      await addMessage(channel._id);
+      const getRes = await chai
+        .request(server)
+        .get(`/message?channel=`)
+        .set('Authorization', `Bearer ${token}`)
+        .send();
+      assert.equal(getRes.status, 400);
+    });
   });
 });

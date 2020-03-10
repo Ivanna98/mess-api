@@ -15,6 +15,9 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), async (req,
 
     const { id } = req.params;
     const updateChannel = await idUpdateChannel(id, title);
+    if (!updateChannel) {
+      throw new Error('Channel doesn`t exist');
+    }
     res.status(200).json({ updateChannel });
   } catch (error) {
     res.status(400).json({ error: error.message });

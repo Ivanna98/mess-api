@@ -14,7 +14,10 @@ chai.use(chaiHttp);
 
 describe('Message api', () => {
   let token;
-
+  // let server;
+  // before(async () => {
+  //   server = await createServer();
+  // })
   beforeEach(async () => {
     await UserCollection.deleteMany({});
     await GroupChannelCollection.deleteMany({});

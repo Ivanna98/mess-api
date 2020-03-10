@@ -4,7 +4,7 @@ const router = express.Router();
 const passport = require('passport');
 
 const {
-  IdUpdateChannel, IdDeleteChannel, getAllChannels, idGetChannel,
+  idUpdateChannel, idDeleteChannel, getAllChannels, idGetChannel,
 } = require('../services/channelServices');
 
 router.put('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
@@ -14,8 +14,7 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), async (req,
     } = req.body;
 
     const { id } = req.params;
-    const updateChannel = await IdUpdateChannel(id, title);
-    console.log(updateChannel);
+    const updateChannel = await idUpdateChannel(id, title);
     res.status(200).json({ updateChannel });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -25,7 +24,7 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), async (req,
 router.delete('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
   try {
     const { id } = req.params;
-    await IdDeleteChannel();
+    await idDeleteChannel(id);
     res.status(200).json('delete success');
   } catch (error) {
     res.status(400).json({ error: error.message });

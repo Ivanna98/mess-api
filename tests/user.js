@@ -7,14 +7,17 @@ const MessageCollection = require('../src/models/message');
 const generateToken = require('../src/utils/generateToken');
 const { user1, user2, wrongId} = require('./mock');
 
-const { createMockUser, addChannel, addMessage} = require('./utils');
+const { createMockUser} = require('./utils');
 
 const { assert } = chai;
 chai.use(chaiHttp);
 
 describe('User api', () => {
   let token;
-
+  // let server;
+  // before(async () => {
+  //   server = createServer();
+  // })
   beforeEach(async () => {
     await UserCollection.deleteMany({});
     await GroupChannelCollection.deleteMany({});

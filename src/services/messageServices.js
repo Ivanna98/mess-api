@@ -1,7 +1,7 @@
 const MessageCollection = require('../models/message');
 
 const deleteMessageFromChannel = async (idChannel) => {
-  MessageCollection.deleteMany({ groupChannel: idChannel });
+  await MessageCollection.deleteMany({ groupChannel: idChannel });
 };
 
 const getAllChannelMessage = async (channel) => MessageCollection

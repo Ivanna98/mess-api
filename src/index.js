@@ -26,3 +26,5 @@ mongoose.connect(DB_URL, { useNewUrlParser: true })
     });
   })
   .catch((error) => console.log(error.message));
+
+module.exports = server;

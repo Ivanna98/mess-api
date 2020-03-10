@@ -17,7 +17,7 @@ const updateOrCreateUser = async (profile) => {
   });
   return newUser;
 };
-const findUser = async (id) => UserCollection.findById();
+const findUser = async (id) => UserCollection.findById(id);
 
 const findAllUser = async () => UserCollection.find();
 

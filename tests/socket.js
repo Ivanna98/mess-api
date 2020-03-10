@@ -55,6 +55,7 @@ describe('Web socket tests', () => {
         });
       })
     });
+
     it('Should return message in another client', async () => {
       const wsClient1 = await initClientWs(token);
       const wsClient2 = await initClientWs(token);
@@ -85,6 +86,7 @@ describe('Web socket tests', () => {
       });
     });
   });
+
   describe('Typing socket', () => {
     it('Should return typing', async () => {
       const wsClient1 = await initClientWs(token);
@@ -95,10 +97,10 @@ describe('Web socket tests', () => {
         wsClient2.on(`userTyping${_id}`, () => {
           resolve();
         });
-
       });
     });
   });
+
   describe('Channel socket', () => {
     it('Should return correct channel', async () => {
       const wsClient1 = await initClientWs(token);
@@ -109,9 +111,7 @@ describe('Web socket tests', () => {
           assert.equal(channel.title, savedChannel.title);
           resolve();
         });
-
       });
     });
   });
-
 });

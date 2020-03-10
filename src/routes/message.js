@@ -11,6 +11,24 @@ router.get('/', protect, async (req, res) => {
       throw new Error('Bad request');
     }
     const messages = await getAllChannelMessage(channel);
+    messages.map((message) => {
+      const {
+        _id,
+        text,
+        createdAt,
+        author,
+        groupChannel,
+      } = message;
+      return ({
+        message: {
+          id: _id,
+          text,
+          author,
+          createdAt,
+          groupChannel,
+        },
+      });
+    });
     res.status(200).json({ messages });
   } catch (error) {
     res.status(400).json({ error: error.message });

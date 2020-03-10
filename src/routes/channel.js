@@ -10,16 +10,23 @@ const {
 
 router.put('/:id', protect, async (req, res) => {
   try {
-    const {
-      title,
-    } = req.body;
+    const titleToUpdate = req.body.title;
 
     const { id } = req.params;
-    const updateChannel = await idUpdateChannel(id, title);
+    const updateChannel = await idUpdateChannel(id, titleToUpdate);
+    const {
+      title,
+      _id,
+    } = updateChannel;
     if (!updateChannel) {
       throw new Error('Channel doesn`t exist');
     }
-    res.status(200).json({ updateChannel });
+    res.status(200).json({
+      updateChannel: {
+        id: _id,
+        title,
+      },
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -39,6 +46,18 @@ router.delete('/:id', protect, async (req, res) => {
 router.get('/', protect, async (req, res) => {
   try {
     const channels = await getAllChannels();
+    channels.map((channel) => {
+      const {
+        _id,
+        title,
+      } = channel;
+      return ({
+        channel: {
+          id: _id,
+          title,
+        },
+      });
+    });
     res.status(200).json({ channels });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -50,7 +69,16 @@ router.get('/:id', protect, async (req, res) => {
     const { id } = req.params;
     const channel = await idGetChannel(id);
     if (channel) {
-      return res.status(200).json({ channel });
+      const {
+        title,
+        _id,
+      } = channel;
+      return res.status(200).json({
+        channel: {
+          title,
+          id: _id,
+        },
+      });
     }
     res.sendStatus(404);
   } catch (error) {

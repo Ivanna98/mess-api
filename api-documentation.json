@@ -1,0 +1,355 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Public API for Messenger Api",
+    "version": "1.0.0",
+    "title": "Messenger"
+  },
+  "host": "localhost:3002",
+  "tags": [
+    {
+      "name": "Channel",
+      "description": "Main model for channels"
+    },
+    {
+      "name": "User",
+      "description": "Main model for users"
+    },
+    {
+      "name": "Message",
+      "description": "Main model for messages"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/channels": {
+      "get": {
+        "tags": [
+          "Channel"
+        ],
+        "summary": "Get all channels",
+        "description": "Returns array of channels",
+        "operationId": "GetAllArticles",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ChannelRes"
+              }
+            }
+          },
+          "400": {
+            "description": "bad request"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/channels/{channelId}": {
+      "get": {
+        "tags": [
+          "Channel"
+        ],
+        "summary": "Find channel by ID",
+        "description": "Returns a single channel",
+        "operationId": "getChannelById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "channelId",
+            "in": "path",
+            "description": "ID of channel to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ChannelRes"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Channel"
+        ],
+        "summary": "Updates a channel",
+        "description": "Return a updated channel",
+        "operationId": "updateChannel",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "channelId",
+            "in": "path",
+            "description": "ID of channel that needs to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Channel input needed to update",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Channel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ChannelRes"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Channel"
+        ],
+        "summary": "Delete a channel",
+        "description": "Delete a channel",
+        "operationId": "deleteChannel",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "channelId",
+            "in": "path",
+            "description": "ID of channel that needs to be updated",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/user/{userId}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Find user by ID",
+        "description": "Returns a single user",
+        "operationId": "getUserById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of user to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/UserRes"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get all users",
+        "description": "Returns array of users",
+        "operationId": "GetAllUsers",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserRes"
+              }
+            }
+          },
+          "400": {
+            "description": "bad request"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/message": {
+      "get": {
+        "tags": [
+          "Message"
+        ],
+        "summary": "Get all messages",
+        "description": "Returns array of messages",
+        "operationId": "GetAllMessages",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/MessageRes"
+              }
+            }
+          },
+          "400": {
+            "description": "bad request"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Channel": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "ChannelRes": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "UserRes": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "picture": {
+          "type": "string"
+        },
+        "onlineStatus": {
+          "type": "boolean"
+        }
+      }
+    },
+    "MessageRes": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "author": {
+          "type": "object"
+        },
+        "groupChannel": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

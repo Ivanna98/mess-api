@@ -1,8 +1,4 @@
-const express = require('express');
-const app = express();
-const mongoose = require('mongoose');
-const config = require('../src/config');
-const configApp = require('../src/app');
+
 const UserCollection = require('../src/models/user');
 const GroupChannelCollection = require('../src/models/groupChannel');
 const MessageCollection = require('../src/models/message');

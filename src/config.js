@@ -6,7 +6,7 @@ const config = {
   db: {
     url: process.env.DB_URL,
   },
-  port: process.env.PORT,
+  port: process.env.PORT || 3002,
   feUrl: process.env.FE_URL,
   cbUrl: process.env.CB_URL,
   googleSecret: process.env.GOOGLE_SECRET,

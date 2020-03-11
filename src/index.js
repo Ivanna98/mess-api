@@ -16,5 +16,3 @@ const init = async () => {
 };
 
 const server = init();
-
-module.exports = server;

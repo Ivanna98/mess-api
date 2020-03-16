@@ -14,5 +14,4 @@ const init = async () => {
     console.log(error.message);
   }
 };
-
-const server = init();
+init();

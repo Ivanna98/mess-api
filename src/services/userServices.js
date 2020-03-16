@@ -1,4 +1,4 @@
-const UserCollection = require('../models/user');
+const UserCollection = require('../models/user.ts');
 
 const updateOrCreateUser = async (profile) => {
   const { id, displayName, picture } = profile;

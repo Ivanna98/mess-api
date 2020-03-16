@@ -1,5 +1,5 @@
 {
-  "include": ["./src"],
+  "include": ["src"],
   "exclude": [
     "./dist",
     "node_modules"
@@ -9,7 +9,7 @@
     "module": "commonjs",
     "outDir": "./dist",                        
     "rootDir": "./src",
-    "strict": true,
+    // "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true

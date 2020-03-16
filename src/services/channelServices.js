@@ -1,4 +1,5 @@
-const GroupChannelCollection = require('../models/groupChannel');
+
+const GroupChannelCollection = require('../models/groupChannel.ts');
 const { deleteMessageFromChannel } = require('./messageServices');
 
 const idUpdateChannel = async (id, title) => GroupChannelCollection.findByIdAndUpdate(id, {

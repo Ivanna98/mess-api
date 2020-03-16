@@ -1,11 +1,11 @@
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 export interface IMessage extends mongoose.Document {
-  groupChannel: string;
-  author: string;
-  text: string;
-  createdAt: string;
-  updatedAt: string;
+  groupChannel: String;
+  author: String;
+  text: String;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const messageSchema = new mongoose.Schema({

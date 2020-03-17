@@ -1,7 +1,21 @@
 import UserCollection from '../models/user';
 
+interface Profile {
+  id: string;
+  displayName: string;
+  picture: string;
+}
 
-export const updateOrCreateUser = async (profile) => {
+interface User {
+  _id: string;
+  googleId: string;
+  name: string;
+  picture: string;
+  email: string;
+  onlineStatus: boolean;
+}
+
+export const updateOrCreateUser = async (profile: Profile): Promise<User> => {
   const { id, displayName, picture } = profile;
   const user = await UserCollection.findOne({ googleId: id });
   if (user) {
@@ -18,9 +32,9 @@ export const updateOrCreateUser = async (profile) => {
   });
   return newUser;
 };
-export const findUser = async (id) => UserCollection.findById(id);
+export const findUser = async (id: string) => UserCollection.findById(id);
 
 export const findAllUser = async () => UserCollection.find();
 
-export const updateOnlineStatus = async (id, newStatus) => UserCollection
+export const updateOnlineStatus = async (id: string, newStatus: boolean) => UserCollection
   .findByIdAndUpdate(id, { onlineStatus: newStatus }, { new: true });

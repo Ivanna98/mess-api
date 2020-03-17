@@ -3,9 +3,13 @@ import { config } from '../config';
 
 const { secretKey, jwtExpiration } = config;
 
-export const generateToken = (payload) => new Promise((resolve, reject) => {
+interface Payload {
+  id: string;
+}
+
+export const generateToken = (payload: Payload) => new Promise<string>((resolve, reject) => {
   jwt.sign(payload, secretKey, { expiresIn: jwtExpiration },
-    (err, token) => {
+    (err, token: string) => {
       if (err) {
         reject(Error('Error token'));
       }

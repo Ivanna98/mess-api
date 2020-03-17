@@ -1,8 +1,6 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import passport from 'passport';
-
-import { config } from '../config';
-import { generateToken } from '../utils/generateToken';
+import { authCallback } from '../controllers/auth';
 
 export const router = express.Router();
 
@@ -17,8 +15,4 @@ router.get('/google/callback', passport.authenticate('google', {
     ['profile'],
   response_type: 'code',
 
-}), async (req: Request, res: Response) => {
-  console.log(req);
-  const token = await generateToken({ id: req.user._id });
-  res.redirect(`${config.feUrl}/success?token=${token}`);
-});
+}), authCallback);

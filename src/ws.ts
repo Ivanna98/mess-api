@@ -1,13 +1,15 @@
-const socketioJwt = require('socketio-jwt');
+import socketioJwt from 'socketio-jwt';
+import socketIO from 'socket.io';
+import * as userServices from './services/userServices';
+import { config } from './config';
+import { messageEvent } from './socketEvent/message';
+import { channelEvent } from './socketEvent/channel';
+import { typingEvent } from './socketEvent/typing';
 
-const socketIO = require('socket.io');
-const { findUser, updateOnlineStatus } = require('./services/userServices');
-const messageEvent = require('./socketEvent/message');
-const channelEvent = require('./socketEvent/channel');
-const typingEvent = require('./socketEvent/typing');
-const config = require('./config');
 
-const ws = (server) => {
+const { findUser, updateOnlineStatus } = userServices;
+
+export const ws = (server) => {
   const io = socketIO(server);
   io.use(socketioJwt.authorize({
     secret: config.secretKey,
@@ -28,5 +30,3 @@ const ws = (server) => {
     }
   });
 };
-
-module.exports = ws;

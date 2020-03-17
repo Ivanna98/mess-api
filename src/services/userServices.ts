@@ -1,6 +1,7 @@
-const UserCollection = require('../models/user.ts');
+import UserCollection from '../models/user';
 
-const updateOrCreateUser = async (profile) => {
+
+export const updateOrCreateUser = async (profile) => {
   const { id, displayName, picture } = profile;
   const user = await UserCollection.findOne({ googleId: id });
   if (user) {
@@ -17,16 +18,9 @@ const updateOrCreateUser = async (profile) => {
   });
   return newUser;
 };
-const findUser = async (id) => UserCollection.findById(id);
+export const findUser = async (id) => UserCollection.findById(id);
 
-const findAllUser = async () => UserCollection.find();
+export const findAllUser = async () => UserCollection.find();
 
-const updateOnlineStatus = async (id, newStatus) => UserCollection
+export const updateOnlineStatus = async (id, newStatus) => UserCollection
   .findByIdAndUpdate(id, { onlineStatus: newStatus }, { new: true });
-
-module.exports = {
-  updateOrCreateUser,
-  findUser,
-  findAllUser,
-  updateOnlineStatus,
-};

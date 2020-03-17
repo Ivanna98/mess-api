@@ -1,9 +1,10 @@
-const express = require('express');
+import express from 'express';
+import passport from 'passport';
 
-const router = express.Router();
-const passport = require('passport');
-const generateToken = require('../utils/generateToken');
-const config = require('../config');
+import { config } from '../config';
+import { generateToken } from '../utils/generateToken';
+
+export const router = express.Router();
 
 router.get('/google', passport.authenticate('google', {
   scope:
@@ -15,10 +16,10 @@ router.get('/google/callback', passport.authenticate('google', {
   scope:
     ['profile'],
   response_type: 'code',
-}), async (req, res) => {
+
+// TODO define interface later
+}), async (req: any, res) => {
+  console.log(req);
   const token = await generateToken({ id: req.user._id });
   res.redirect(`${config.feUrl}/success?token=${token}`);
 });
-
-
-module.exports = router;

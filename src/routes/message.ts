@@ -1,8 +1,13 @@
-const express = require('express');
+import express from 'express';
+import { protect } from '../middleware/protect';
+import * as messageServices from '../services/messageServices';
 
-const router = express.Router();
-const protect = require('../middleware/protect');
-const { getAllChannelMessage } = require('../services/messageServices');
+const {
+  getAllChannelMessage,
+} = messageServices;
+
+export const router = express.Router();
+
 
 router.get('/', protect, async (req, res) => {
   try {
@@ -34,5 +39,3 @@ router.get('/', protect, async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
-
-module.exports = router;

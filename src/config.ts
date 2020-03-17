@@ -1,8 +1,9 @@
-const customEnv = require('custom-env');
+
+import customEnv from 'custom-env';
 
 customEnv.env(true);
 
-const config = {
+export const config = {
   db: {
     url: process.env.DB_URL,
   },
@@ -14,4 +15,3 @@ const config = {
   secretKey: process.env.SECRET,
   jwtExpiration: 5184000,
 };
-module.exports = config;

@@ -1,7 +1,10 @@
-const { findUser } = require('../services/userServices');
-const { createMessage } = require('../services/messageServices');
+import * as userServices from '../services/userServices';
+import * as messageServices from '../services/messageServices';
 
-const messageEvent = (socket, id, io) => {
+const { findUser } = userServices;
+const { createMessage } = messageServices;
+
+export const messageEvent = (socket, id, io) => {
   socket.on('message', async ({ messValue, channelId }) => {
     const user = await findUser(id);
     const addedMess = await createMessage({ user, messValue, channelId });
@@ -24,5 +27,3 @@ const messageEvent = (socket, id, io) => {
     socket.broadcast.emit('addedMessChannel', { addedMess, channelId });
   });
 };
-
-module.exports = messageEvent;

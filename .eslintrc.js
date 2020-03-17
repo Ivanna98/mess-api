@@ -25,6 +25,9 @@ module.exports = {
     "linebreak-style": "off",
     "no-underscore-dangle": "off",
     "no-useless-escape": "off",
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "import/no-unresolved": "off",
+    "import/extensions": "off",
+    "import/prefer-default-export": "off"
   },
 };

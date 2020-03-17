@@ -1,12 +1,16 @@
-const express = require('express');
-
-const protect = require('../middleware/protect');
-
-const router = express.Router();
+import express from 'express';
+import { protect } from '../middleware/protect';
+import * as channelServices from '../services/channelServices';
 
 const {
-  idUpdateChannel, idDeleteChannel, getAllChannels, idGetChannel,
-} = require('../services/channelServices');
+  idUpdateChannel,
+  idDeleteChannel,
+  getAllChannels,
+  idGetChannel,
+} = channelServices;
+
+export const router = express.Router();
+
 
 router.put('/:id', protect, async (req, res) => {
   try {
@@ -85,5 +89,3 @@ router.get('/:id', protect, async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
-
-module.exports = router;

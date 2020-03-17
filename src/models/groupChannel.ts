@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 
 export interface IChannel extends mongoose.Document {
-  title: string;
+  title: String;
 }
 
 const GroupChannelSchema = new mongoose.Schema({
   title: {
     type: String,
-    require: true,
+    required: true,
   },
 });
 

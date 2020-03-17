@@ -1,8 +1,10 @@
-const express = require('express');
+import express from 'express';
+import { protect } from '../middleware/protect';
+import * as userServices from '../services/userServices';
 
-const router = express.Router();
-const protect = require('../middleware/protect');
-const { findUser, findAllUser } = require('../services/userServices');
+export const router = express.Router();
+
+const { findUser, findAllUser } = userServices;
 
 router.get('/', protect, async (req, res) => {
   try {
@@ -48,5 +50,3 @@ router.get('/:id', protect, async (req, res) => {
     return res.status(400).json({ error: error.message });
   }
 });
-
-module.exports = router;

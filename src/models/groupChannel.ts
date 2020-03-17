@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
-export interface IChannel extends mongoose.Document {
-  title: String;
+export interface IChannel {
+  title: string;
 }
 
 const GroupChannelSchema = new mongoose.Schema({
@@ -11,4 +11,4 @@ const GroupChannelSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model<IChannel>('GroupChannel', GroupChannelSchema);
+export default mongoose.model<IChannel & mongoose.Document>('GroupChannel', GroupChannelSchema);

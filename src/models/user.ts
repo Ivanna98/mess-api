@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 
-export interface IUser extends mongoose.Document {
-  picture: String,
-  name: String,
-  googleId: String,
-  email: String,
-  onlineStatus: Boolean,
+export interface IUser {
+  picture: string,
+  name: string,
+  googleId: string,
+  email: string,
+  onlineStatus: boolean,
 }
 
 const UserSchema = new mongoose.Schema({
@@ -19,11 +19,11 @@ const UserSchema = new mongoose.Schema({
   },
   googleId: {
     type: String,
-    require: true,
+    required: true,
   },
   email: {
     type: String,
-    require: true,
+    required: true,
   },
   onlineStatus: {
     type: Boolean,
@@ -31,4 +31,4 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model<IUser>('User', UserSchema);
+export default mongoose.model<IUser & mongoose.Document>('User', UserSchema);

@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import passport from 'passport';
 
 import { config } from '../config';
@@ -17,8 +17,7 @@ router.get('/google/callback', passport.authenticate('google', {
     ['profile'],
   response_type: 'code',
 
-// TODO define interface later
-}), async (req: any, res) => {
+}), async (req: Request, res: Response) => {
   console.log(req);
   const token = await generateToken({ id: req.user._id });
   res.redirect(`${config.feUrl}/success?token=${token}`);

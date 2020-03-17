@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 
-export interface IMessage extends mongoose.Document {
-  groupChannel: String;
-  author: String;
-  text: String;
-  createdAt: Date;
-  updatedAt: Date;
+export interface IMessage {
+  groupChannel: string;
+  author: string;
+  text: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 const messageSchema = new mongoose.Schema({
@@ -25,4 +25,4 @@ const messageSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-export default mongoose.model<IMessage>('Message', messageSchema);
+export default mongoose.model<IMessage & mongoose.Document>('Message', messageSchema);

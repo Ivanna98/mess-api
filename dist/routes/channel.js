@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
+const express_1 = tslib_1.__importDefault(require("express"));
+const protect_1 = require("../middleware/protect");
+const channel_1 = require("../controllers/channel");
+exports.router = express_1.default.Router();
+exports.router.put('/:id', protect_1.protect, channel_1.putOne);
+exports.router.delete('/:id', protect_1.protect, channel_1.deleteOne);
+exports.router.get('/', protect_1.protect, channel_1.getAll);
+exports.router.get('/:id', protect_1.protect, channel_1.getOne);

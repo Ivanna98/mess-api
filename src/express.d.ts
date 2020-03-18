@@ -1,6 +1,5 @@
 declare namespace Express {
-  export interface Request {
-    user?: {
+  export interface User {
       _id: string,
       picture: string,
       name: string,
@@ -9,4 +8,3 @@ declare namespace Express {
       onlineStatus: boolean,
     }
   }
-}

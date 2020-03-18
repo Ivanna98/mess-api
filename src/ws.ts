@@ -18,7 +18,7 @@ export const ws = (server: http.Server) => {
     decodedPropertyName: 'token',
   }));
   io.on('connection', async (socket) => {
-    const user = await findUser((socket as any).decoded_token.id);
+    const user = await findUser(socket.decoded_token.id);
     if (user) {
       io.emit('updateOnlineStatus', { user, onlineStatus: true });
       updateOnlineStatus(user._id, true);

@@ -18,7 +18,9 @@
     "emitDecoratorMetadata": true,
     "importHelpers": true,
     "noImplicitAny": false,
-    "declarationDir": "src",
-    "typeRoots":  ["**/*.d.ts"]
+    "typeRoots":  [
+      "**/*.d.ts",
+      "./node_modules/@types"
+    ],
   }
 }

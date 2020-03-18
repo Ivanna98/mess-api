@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 export interface IMessage {
+  _id: string;
   groupChannel: string;
   author: string;
   text: string;

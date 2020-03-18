@@ -4,26 +4,28 @@ import * as messageServices from '../services/messageServices';
 const { findUser } = userServices;
 const { createMessage } = messageServices;
 
-export const messageEvent = (socket, id, io) => {
+export const messageEvent = (socket: SocketIO.Socket, id: string, io: SocketIO.Server) => {
   socket.on('message', async ({ messValue, channelId }) => {
     const user = await findUser(id);
-    const addedMess = await createMessage({ user, messValue, channelId });
-    const {
-      _id,
-      text,
-      createdAt,
-      author,
-      groupChannel,
-    } = addedMess;
-    io.emit(`addedMess${channelId}`, {
-      addedMess: {
-        id: _id,
+    if (user) {
+      const addedMess = await createMessage({ user: user._id, messValue, channelId });
+      const {
+        _id,
         text,
-        author,
         createdAt,
+        author,
         groupChannel,
-      },
-    });
-    socket.broadcast.emit('addedMessChannel', { addedMess, channelId });
+      } = addedMess;
+      io.emit(`addedMess${channelId}`, {
+        addedMess: {
+          id: _id,
+          text,
+          author,
+          createdAt,
+          groupChannel,
+        },
+      });
+      socket.broadcast.emit('addedMessChannel', { addedMess, channelId });
+    }
   });
 };

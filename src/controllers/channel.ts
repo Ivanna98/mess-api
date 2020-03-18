@@ -41,13 +41,16 @@ export const putOne: EditOne = async (req, res) => {
 
     const { id } = req.params;
     const updateChannel = await idUpdateChannel(id, titleToUpdate);
+
+    if (!updateChannel) {
+      throw new Error('Channel doesn`t exist');
+    }
+
     const {
       title,
       _id,
     } = updateChannel;
-    if (!updateChannel) {
-      throw new Error('Channel doesn`t exist');
-    }
+
     res.status(200).json({
       updateChannel: {
         id: _id,

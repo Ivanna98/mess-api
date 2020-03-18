@@ -1,4 +1,5 @@
 import passportJwt from 'passport-jwt';
+import { PassportStatic } from 'passport';
 import { config } from '../config';
 import * as userServices from '../services/userServices';
 
@@ -11,7 +12,7 @@ const options = {
   secretOrKey: config.secretKey,
 };
 
-export const connectPassport = (passport) => {
+export const connectPassport = (passport: PassportStatic) => {
   passport.use(new Strategy(options, async (payload, done) => {
     try {
       const user = await findUser(payload.id);

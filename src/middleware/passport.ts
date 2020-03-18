@@ -12,7 +12,7 @@ export default () => passport.use(new GoogleStrategy({
   clientSecret: config.googleSecret,
   callbackURL: `${config.cbUrl}/auth/google/callback`,
 },
-async (accessToken, refreshToken, profile, done) => {
+async (__, _, profile, done) => {
   done(null, await updateOrCreateUser(profile));
 }));
 

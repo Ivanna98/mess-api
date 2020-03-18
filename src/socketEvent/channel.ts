@@ -3,8 +3,12 @@ import * as channelServices from '../services/channelServices';
 
 const { createChannel } = channelServices;
 
-export const channelEvent = (socket, io) => {
-  socket.on('newChannel', async ({ title }) => {
+interface socketData {
+  title: string;
+}
+
+export const channelEvent = (socket: SocketIO.Socket, io: SocketIO.Server) => {
+  socket.on('newChannel', async ({ title }: socketData) => {
     const savedChannel = await createChannel(title);
     io.emit('addedChannel', savedChannel);
   });

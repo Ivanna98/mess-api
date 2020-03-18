@@ -1,11 +1,12 @@
 import mongoose from 'mongoose';
 
 export interface IUser {
-  picture: string,
-  name: string,
-  googleId: string,
-  email: string,
-  onlineStatus: boolean,
+  _id: string;
+  picture: string;
+  name: string;
+  googleId: string;
+  email: string;
+  onlineStatus: boolean;
 }
 
 const UserSchema = new mongoose.Schema({
